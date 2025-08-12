@@ -7,42 +7,51 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
             text-align: center;
             padding: 50px;
-            background: #f7f7f7;
+            color: #333;
         }
         .container {
             background: white;
             padding: 30px;
+            border-radius: 10px;
             max-width: 500px;
             margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         h1 {
-            color: green;
+            color: #28a745;
         }
         p {
             font-size: 18px;
+            margin: 15px 0;
+        }
+        .order-id {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .phone-number {
+            font-weight: bold;
+            color: #ff5722;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>✅ Order Placed Successfully!</h1>
+        <p>Your order ID: <span class="order-id" id="orderId">#123456</span></p>
+        <p>Our team will call you from <span class="phone-number" id="phoneNumber">+91-8125006716</span> for payment details confirmation.</p>
+        <p>Thank you for shopping with <strong>Vedic Ahar</strong>!</p>
+    </div>
 
-<div class="container">
-    <h1>✅ Order Placed Successfully!</h1>
-    <p id="orderText"></p>
-</div>
+    <script>
+        // Example: you can set these values dynamically if needed
+        const orderId = new URLSearchParams(window.location.search).get('order') || '#123456';
+        const phoneNumber = new URLSearchParams(window.location.search).get('phone') || '+91-9876543210';
 
-<script>
-    // Extract order ID and phone from URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get("orderId");
-    const phone = params.get("phone");
-
-    document.getElementById("orderText").textContent =
-        `Your Order ID: ${orderId}. Our team will call you at ${phone} for payment details confirmation.`;
-</script>
-
+        document.getElementById('orderId').textContent = orderId;
+        document.getElementById('phoneNumber').textContent = phoneNumber;
+    </script>
 </body>
 </html>
