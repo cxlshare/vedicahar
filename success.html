@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Order Success</title>
-<style>
-    body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: #f7f7f7;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: green;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Order Submitted!</h1>
-<p id="orderMessage"></p>
+<div class="container">
+    <h1>✅ Order Placed Successfully!</h1>
+    <p id="orderText"></p>
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const orderId = localStorage.getItem("orderId");
-    const name = localStorage.getItem("customerName");
+    // Extract order ID and phone from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("orderId");
+    const phone = params.get("phone");
 
-    if (orderId) {
-        document.getElementById("orderMessage").innerHTML = `
-            <strong>Thank you, ${name}!</strong><br><br>
-            Your Order ID is <b>${orderId}</b>.<br>
-            Our team will call you back for confirmation and to place your order.<br>
-            We appreciate your choice of our products!
-        `;
-    } else {
-        document.getElementById("orderMessage").textContent = "No order found.";
-    }
-});
+    document.getElementById("orderText").textContent =
+        `Your Order ID: ${orderId}. Our team will call you at ${phone} for payment details confirmation.`;
 </script>
 
 </body>

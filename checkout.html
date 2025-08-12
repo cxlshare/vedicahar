@@ -1,40 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Checkout</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .order-summary { border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+    img { width: 80px; height: 80px; object-fit: cover; margin-right: 10px; }
+    .product { display: flex; align-items: center; margin-bottom: 10px; }
+    label { font-weight: bold; }
+    input, textarea { width: 100%; padding: 8px; margin-top: 4px; margin-bottom: 12px; }
+    button { padding: 10px 15px; background: green; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: darkgreen; }
+</style>
 </head>
 <body>
-  <h1>Checkout</h1>
-  <form id="checkoutForm" action="https://formspree.io/f/mqalnbnp" method="POST">
+
+<h1>Checkout</h1>
+
+<div id="orderSummary" class="order-summary"></div>
+
+<h2>Shipping Details</h2>
+<form id="checkoutForm" action="https://formspree.io/f/mqalnbnp" method="POST">
+    <label>Order ID:</label>
+    <input type="text" name="order_id" id="order_id" readonly><br>
+
     <label>Name:</label>
     <input type="text" name="name" required><br>
+
+    <label>Contact:</label>
+    <input type="text" name="contact" required><br>
 
     <label>Email:</label>
     <input type="email" name="_replyto" required><br>
 
-    <label>Product:</label>
-    <input type="text" name="product" value="Vedic Ahar Oil" readonly><br>
+    <label>Shipping Address:</label>
+    <textarea name="address" required></textarea><br>
 
-    <!-- Hidden Order ID -->
-    <input type="hidden" name="order_id" id="order_id">
-
-    <!-- Redirect after success -->
+    <input type="hidden" name="orderDetails" id="orderDetails">
     <input type="hidden" name="_redirect" value="success.html">
 
     <button type="submit">Place Order</button>
-  </form>
+</form>
 
-  <script>
-    // Generate random order ID
-    function generateOrderID() {
-      return 'VA-' + Date.now().toString(36).toUpperCase();
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Generate Order ID
+    const orderID = "VA-" + Date.now().toString(36).toUpperCase();
+    document.getElementById("order_id").value = orderID;
+
+    let products = JSON.parse(localStorage.getItem('orderData')) || {};
+    let summaryDiv = document.getElementById('orderSummary');
+    let orderDetailsText = "";
+
+    const productData = {
+        coconut: { name: "Coconut Oil", img: "coconut-oil.jpg" },
+        nuvvulu: { name: "Nuvvulu Oil", img: "nuvvulu-oil.jpg" },
+        palli: { name: "Palli Oil", img: "palli-oil.jpg" },
+        sunflower: { name: "Sunflower Oil", img: "sunflower-oil.jpg" }
+    };
+
+    for (let key in products) {
+        if (products[key] > 0) {
+            summaryDiv.innerHTML += `
+                <div class="product">
+                    <img src="${productData[key].img}" alt="${productData[key].name}">
+                    <span>${productData[key].name} - Quantity: ${products[key]}</span>
+                </div>
+            `;
+            orderDetailsText += `${productData[key].name}: ${products[key]}\n`;
+        }
     }
 
-    // Set Order ID before submitting
-    document.getElementById('checkoutForm').addEventListener('submit', function() {
-      document.getElementById('order_id').value = generateOrderID();
-    });
-  </script>
+    // Add Order ID to details
+    orderDetailsText = `Order ID: ${orderID}\n` + orderDetailsText;
+    document.getElementById("orderDetails").value = orderDetailsText;
+});
+</script>
+
 </body>
 </html>
