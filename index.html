@@ -1,170 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VedicAhar - Pure Cold Pressed Oils</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background-color: #fffaf2;
-      color: #3d2b1f;
-      line-height: 1.6;
-    }
-    header {
-      background: #f5d68e;
-      text-align: center;
-      padding: 1.5rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #7a4b17;
-    }
-    header p {
-      margin: 0.5rem 0 0;
-      font-style: italic;
-    }
-    nav {
-      background: #7a4b17;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    nav a {
-      color: #fff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-    }
-    .intro {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .intro h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-    .product-card {
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      text-align: center;
-      padding: 1rem;
-    }
-    .product-card img {
-      max-width: 100%;
-      border-radius: 6px;
-    }
-    .product-card h3 {
-      margin-top: 1rem;
-      color: #7a4b17;
-    }
-    .product-card p {
-      font-size: 0.9rem;
-      color: #555;
-    }
-    footer {
-      background: #7a4b17;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-    .cta {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .cta button {
-      background: #d4a653;
-      border: none;
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .cta button:hover {
-      background: #b58434;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Help Form</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Submit Your Query</h1>
+        <form id="queryForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-  <header>
-    <h1>VedicAhar</h1>
-    <p>Nature’s Nutrition, Purely Pressed</p>
-  </header>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#products">Our Oils</a>
-    <a href="#contact">Contact</a>
-  </nav>
+            <label for="message">Your Question:</label>
+            <textarea id="message" name="message" required></textarea>
 
-  <section id="about" class="intro">
-    <h2>About VedicAhar</h2>
-    <p>
-      At VedicAhar, we believe in preserving the ancient art of cold pressing oils to retain their natural aroma, nutrition, and purity.  
-      Our oils are extracted using traditional methods, free from chemicals, heat, and preservatives — ensuring every drop is as pure as nature intended.
-    </p>
-  </section>
-
-  <section id="products">
-    <h2 style="text-align:center;">Cold Pressed Oils</h2>
-    <div class="products">
-      <div class="product-card">
-        <img src="palli-oil.jpg" alt="Palli (Groundnut) Oil">
-        <h3>Palli (Groundnut) Oil</h3>
-        <p>Rich in flavor and heart-healthy fats, perfect for everyday cooking and deep frying.</p>
-      </div>
-      <div class="product-card">
-        <img src="nuvvulu-oil.jpg" alt="Nuvvulu (Sesame) Oil">
-        <h3>Nuvvulu (Sesame) Oil</h3>
-        <p>A golden elixir full of antioxidants, great for traditional dishes and skin care.</p>
-      </div>
-      <div class="product-card">
-        <img src="sunflower-oil.jpg" alt="Sunflower Oil">
-        <h3>Sunflower Oil</h3>
-        <p>Light, mild, and versatile — suitable for sautéing, stir-frying, and salads.</p>
-      </div>
-      <div class="product-card">
-        <img src="coconut-oil.jpg" alt="Coconut Oil">
-        <h3>Coconut Oil</h3>
-        <p>Cold pressed from fresh coconuts, perfect for cooking, skincare, and hair care.</p>
-      </div>
+            <button type="button" id="aiHelpBtn">AI Help</button>
+            <button type="submit">Submit</button>
+        </form>
     </div>
 
-    <div class="cta">
-      <button>Order Now</button>
+    <!-- AI Help Popup -->
+    <div id="aiPopup" class="popup">
+        <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>AI Help</h2>
+            <p id="aiResponse">Ask your question above, then click "AI Help".</p>
+        </div>
     </div>
-  </section>
 
-  <section id="contact" style="text-align:center; margin-top:2rem;">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:info.vedicahar@gmail.com">info@vedicahar.com</a></p>
-    <p>Phone: +91 8125006716</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 VedicAhar. All rights reserved.</p>
-  </footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
