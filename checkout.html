@@ -1,88 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout</title>
-<style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .order-summary { border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
-    img { width: 80px; height: 80px; object-fit: cover; margin-right: 10px; }
-    .product { display: flex; align-items: center; margin-bottom: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
 </head>
 <body>
+  <h1>Checkout</h1>
+  <form id="checkoutForm" action="https://formspree.io/f/mqalnbnp" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
 
-<h1>Checkout</h1>
+    <label>Email:</label>
+    <input type="email" name="_replyto" required><br>
 
-<div id="orderSummary" class="order-summary"></div>
+    <label>Product:</label>
+    <input type="text" name="product" value="Vedic Ahar Oil" readonly><br>
 
-<h2>Shipping Details</h2>
-<form id="checkoutForm">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <!-- Hidden Order ID -->
+    <input type="hidden" name="order_id" id="order_id">
 
-    <label>Contact:</label><br>
-    <input type="text" name="contact" required><br><br>
-
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
-
-    <label>Shipping Address:</label><br>
-    <textarea name="address" required></textarea><br><br>
-
-    <input type="hidden" name="orderDetails" id="orderDetails">
+    <!-- Redirect after success -->
+    <input type="hidden" name="_redirect" value="success.html">
 
     <button type="submit">Place Order</button>
-</form>
+  </form>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let products = JSON.parse(localStorage.getItem('orderData'));
-    let summaryDiv = document.getElementById('orderSummary');
-    let orderDetailsText = "";
-
-    const productData = {
-        coconut: { name: "Coconut Oil", img: "coconut-oil.jpg" },
-        nuvvulu: { name: "Nuvvulu Oil", img: "nuvvulu-oil.jpg" },
-        palli: { name: "Palli Oil", img: "palli-oil.jpg" },
-        sunflower: { name: "Sunflower Oil", img: "sunflower-oil.jpg" }
-    };
-
-    for (let key in products) {
-        if (products[key] > 0) {
-            summaryDiv.innerHTML += `
-                <div class="product">
-                    <img src="${productData[key].img}" alt="${productData[key].name}">
-                    <span>${productData[key].name} - Quantity: ${products[key]}</span>
-                </div>
-            `;
-            orderDetailsText += `${productData[key].name}: ${products[key]}\n`;
-        }
+  <script>
+    // Generate random order ID
+    function generateOrderID() {
+      return 'VA-' + Date.now().toString(36).toUpperCase();
     }
 
-    document.getElementById("orderDetails").value = orderDetailsText;
-});
-
-// Handle form submission
-document.getElementById("checkoutForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    // Generate a random order ID
-    const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
-
-    // Save order data to localStorage
-    localStorage.setItem("orderId", orderId);
-    localStorage.setItem("customerName", this.name.value);
-    localStorage.setItem("customerContact", this.contact.value);
-    localStorage.setItem("customerEmail", this.email.value);
-    localStorage.setItem("customerAddress", this.address.value);
-    localStorage.setItem("orderDetails", document.getElementById("orderDetails").value);
-
-    // Redirect to success page
-    window.location.href = "success.html";
-});
-</script>
-
+    // Set Order ID before submitting
+    document.getElementById('checkoutForm').addEventListener('submit', function() {
+      document.getElementById('order_id').value = generateOrderID();
+    });
+  </script>
 </body>
 </html>
