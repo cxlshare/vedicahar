@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .order-summary { border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+    img { width: 80px; height: 80px; object-fit: cover; margin-right: 10px; }
+    .product { display: flex; align-items: center; margin-bottom: 10px; }
+</style>
 </head>
 <body>
 
-<h2>Checkout</h2>
-<div id="order-summary"></div>
+<h1>Checkout</h1>
 
-<form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" name="Name" id="name" required><br><br>
+<div id="orderSummary" class="order-summary"></div>
 
-    <label for="contact">Contact No:</label>
-    <input type="text" name="Contact" id="contact" required><br><br>
+<h2>Shipping Details</h2>
+<form action="https://formspree.io/f/your-form-id" method="POST">
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br><br>
 
-    <label for="email">Email:</label>
-    <input type="email" name="Email" id="email" required><br><br>
+    <label>Contact:</label><br>
+    <input type="text" name="contact" required><br><br>
 
-    <label for="address">Shipping Address:</label>
-    <textarea name="Address" id="address" required></textarea><br><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Shipping Address:</label><br>
+    <textarea name="address" required></textarea><br><br>
+
+    <input type="hidden" name="orderDetails" id="orderDetails">
 
     <button type="submit">Place Order</button>
 </form>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    let img = localStorage.getItem('selectedImage');
-    let qty = localStorage.getItem('quantity');
-    if (img && qty) {
-        document.getElementById("order-summary").innerHTML = `
-            <p><strong>Product Selected:</strong></p>
-            <img src="${img}" width="100"><br>
-            <p><strong>Quantity:</strong> ${qty}</p>
-        `;
+document.addEventListener("DOMContentLoaded", function() {
+    let products = JSON.parse(localStorage.getItem('orderData'));
+    let summaryDiv = document.getElementById('orderSummary');
+    let orderDetailsText = "";
+
+    const productData = {
+        coconut: { name: "Coconut Oil", img: "coconut-oil.jpg" },
+        nuvvulu: { name: "Nuvvulu Oil", img: "nuvvulu-oil.jpg" },
+        palli: { name: "Palli Oil", img: "palli-oil.jpg" },
+        sunflower: { name: "Sunflower Oil", img: "sunflower-oil.jpg" }
+    };
+
+    for (let key in products) {
+        if (products[key] > 0) {
+            summaryDiv.innerHTML += `
+                <div class="product">
+                    <img src="${productData[key].img}" alt="${productData[key].name}">
+                    <span>${productData[key].name} - Quantity: ${products[key]}</span>
+                </div>
+            `;
+            orderDetailsText += `${productData[key].name}: ${products[key]}\n`;
+        }
     }
+
+    document.getElementById("orderDetails").value = orderDetailsText;
 });
 </script>
 

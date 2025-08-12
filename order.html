@@ -1,67 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Page</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .product { display: inline-block; text-align: center; margin: 20px; }
-        .product img { width: 150px; height: 150px; border: 2px solid transparent; cursor: pointer; }
-        .product img.selected { border-color: green; }
-        .quantity { margin-top: 10px; }
-        button { padding: 5px 10px; margin: 0 5px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Oils</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .product { display: inline-block; width: 200px; margin: 15px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; text-align: center; }
+    img { width: 150px; height: 150px; object-fit: cover; border-radius: 5px; }
+    .qty-control { display: flex; justify-content: center; align-items: center; margin-top: 10px; }
+    button { padding: 5px 10px; margin: 0 5px; cursor: pointer; }
+</style>
 </head>
 <body>
 
-<h2>Select Your Product</h2>
+<h1>Select Your Oils</h1>
 
 <div class="product">
-    <img src="images/product1.jpg" alt="Product 1" onclick="selectImage(this)">
-    <div class="quantity">
-        <button onclick="changeQty(-1)">-</button>
-        <span id="qty">1</span>
-        <button onclick="changeQty(1)">+</button>
+    <img src="coconut-oil.jpg" alt="Coconut Oil">
+    <p>Coconut Oil</p>
+    <div class="qty-control">
+        <button onclick="changeQty('coconut', -1)">-</button>
+        <span id="coconut">0</span>
+        <button onclick="changeQty('coconut', 1)">+</button>
     </div>
 </div>
 
 <div class="product">
-    <img src="images/product2.jpg" alt="Product 2" onclick="selectImage(this)">
-    <div class="quantity">
-        <button onclick="changeQty(-1)">-</button>
-        <span id="qty2">1</span>
-        <button onclick="changeQty(1)">+</button>
+    <img src="nuvvulu-oil.jpg" alt="Nuvvulu Oil">
+    <p>Nuvvulu Oil</p>
+    <div class="qty-control">
+        <button onclick="changeQty('nuvvulu', -1)">-</button>
+        <span id="nuvvulu">0</span>
+        <button onclick="changeQty('nuvvulu', 1)">+</button>
+    </div>
+</div>
+
+<div class="product">
+    <img src="palli-oil.jpg" alt="Palli Oil">
+    <p>Palli Oil</p>
+    <div class="qty-control">
+        <button onclick="changeQty('palli', -1)">-</button>
+        <span id="palli">0</span>
+        <button onclick="changeQty('palli', 1)">+</button>
+    </div>
+</div>
+
+<div class="product">
+    <img src="sunflower-oil.jpg" alt="Sunflower Oil">
+    <p>Sunflower Oil</p>
+    <div class="qty-control">
+        <button onclick="changeQty('sunflower', -1)">-</button>
+        <span id="sunflower">0</span>
+        <button onclick="changeQty('sunflower', 1)">+</button>
     </div>
 </div>
 
 <br><br>
-<button onclick="goNext()">Next</button>
+<button onclick="goToCheckout()">Next</button>
 
 <script>
-let selectedImage = null;
-let quantity = 1;
-
-function selectImage(img) {
-    document.querySelectorAll('.product img').forEach(i => i.classList.remove('selected'));
-    img.classList.add('selected');
-    selectedImage = img.src;
+function changeQty(id, change) {
+    let qtyElem = document.getElementById(id);
+    let qty = parseInt(qtyElem.textContent) + change;
+    if (qty < 0) qty = 0;
+    qtyElem.textContent = qty;
 }
 
-function changeQty(val) {
-    quantity = Math.max(1, quantity + val);
-    document.getElementById('qty').innerText = quantity;
-}
-
-function goNext() {
-    if (!selectedImage) {
-        alert("Please select a product first!");
-        return;
-    }
-    // Store selection in localStorage
-    localStorage.setItem('selectedImage', selectedImage);
-    localStorage.setItem('quantity', quantity);
-    window.location.href = "checkout.html";
+function goToCheckout() {
+    let products = {
+        coconut: parseInt(document.getElementById('coconut').textContent),
+        nuvvulu: parseInt(document.getElementById('nuvvulu').textContent),
+        palli: parseInt(document.getElementById('palli').textContent),
+        sunflower: parseInt(document.getElementById('sunflower').textContent)
+    };
+    localStorage.setItem('orderData', JSON.stringify(products));
+    window.location.href = 'checkout.html';
 }
 </script>
 
