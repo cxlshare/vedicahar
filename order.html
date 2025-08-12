@@ -1,90 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order - VedicAhar</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background-color: #fffaf2;
-      color: #3d2b1f;
-    }
-    header {
-      background: #f5d68e;
-      text-align: center;
-      padding: 1.5rem;
-    }
-    header h1 {
-      margin: 0;
-      color: #7a4b17;
-    }
-    form {
-      max-width: 500px;
-      margin: 2rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 0.8rem;
-      margin-top: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      background: #d4a653;
-      border: none;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 1.5rem;
-    }
-    button:hover {
-      background: #b58434;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .product { display: inline-block; text-align: center; margin: 20px; }
+        .product img { width: 150px; height: 150px; border: 2px solid transparent; cursor: pointer; }
+        .product img.selected { border-color: green; }
+        .quantity { margin-top: 10px; }
+        button { padding: 5px 10px; margin: 0 5px; }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Order Cold Pressed Oils</h1>
-  </header>
+<h2>Select Your Product</h2>
 
-  <form action="https://formspree.io/f/mqalnbnp" method="POST">
-    <label for="name">Full Name:</label>
-    <input type="text" name="name" id="name" required>
+<div class="product">
+    <img src="images/product1.jpg" alt="Product 1" onclick="selectImage(this)">
+    <div class="quantity">
+        <button onclick="changeQty(-1)">-</button>
+        <span id="qty">1</span>
+        <button onclick="changeQty(1)">+</button>
+    </div>
+</div>
 
-    <label for="name">Contact No:</label>
-    <input type="text" name="contactno" id="contactno" required>
-    
-    <label for="email">Email Address:</label>
-    <input type="email" name="_replyto" id="email" required>
+<div class="product">
+    <img src="images/product2.jpg" alt="Product 2" onclick="selectImage(this)">
+    <div class="quantity">
+        <button onclick="changeQty(-1)">-</button>
+        <span id="qty2">1</span>
+        <button onclick="changeQty(1)">+</button>
+    </div>
+</div>
 
-    <label for="oil">Choose Oil Type:</label>
-    <select name="oil" id="oil" required>
-      <option value="">-- Select --</option>
-      <option value="Palli (Groundnut) Oil">Palli (Groundnut) Oil</option>
-      <option value="Nuvvulu (Sesame) Oil">Nuvvulu (Sesame) Oil</option>
-      <option value="Sunflower Oil">Sunflower Oil</option>
-      <option value="Coconut Oil">Coconut Oil</option>
-    </select>
+<br><br>
+<button onclick="goNext()">Next</button>
 
-    <label for="quantity">Quantity (Litres):</label>
-    <input type="number" name="quantity" id="quantity" min="1" required>
+<script>
+let selectedImage = null;
+let quantity = 1;
 
-    <input type="hidden" name="_redirect" value="https://YOUR_GITHUB_USERNAME.github.io/YOUR_REPO_NAME/thankyou.html">
+function selectImage(img) {
+    document.querySelectorAll('.product img').forEach(i => i.classList.remove('selected'));
+    img.classList.add('selected');
+    selectedImage = img.src;
+}
 
-    <button type="submit">Place Order</button>
-  </form>
+function changeQty(val) {
+    quantity = Math.max(1, quantity + val);
+    document.getElementById('qty').innerText = quantity;
+}
+
+function goNext() {
+    if (!selectedImage) {
+        alert("Please select a product first!");
+        return;
+    }
+    // Store selection in localStorage
+    localStorage.setItem('selectedImage', selectedImage);
+    localStorage.setItem('quantity', quantity);
+    window.location.href = "checkout.html";
+}
+</script>
 
 </body>
 </html>

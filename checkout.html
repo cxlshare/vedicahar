@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+<body>
+
+<h2>Checkout</h2>
+<div id="order-summary"></div>
+
+<form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="Name" id="name" required><br><br>
+
+    <label for="contact">Contact No:</label>
+    <input type="text" name="Contact" id="contact" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="Email" id="email" required><br><br>
+
+    <label for="address">Shipping Address:</label>
+    <textarea name="Address" id="address" required></textarea><br><br>
+
+    <button type="submit">Place Order</button>
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let img = localStorage.getItem('selectedImage');
+    let qty = localStorage.getItem('quantity');
+    if (img && qty) {
+        document.getElementById("order-summary").innerHTML = `
+            <p><strong>Product Selected:</strong></p>
+            <img src="${img}" width="100"><br>
+            <p><strong>Quantity:</strong> ${qty}</p>
+        `;
+    }
+});
+</script>
+
+</body>
+</html>
