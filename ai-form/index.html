@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Help Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Your Query</h1>
+        <form id="queryForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Your Question:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="button" id="aiHelpBtn">AI Help</button>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- AI Help Popup -->
+    <div id="aiPopup" class="popup">
+        <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>AI Help</h2>
+            <p id="aiResponse">Ask your question above, then click "AI Help".</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
