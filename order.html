@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order - VedicAhar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #fffaf2;
+      color: #3d2b1f;
+    }
+    header {
+      background: #f5d68e;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    header h1 {
+      margin: 0;
+      color: #7a4b17;
+    }
+    form {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #d4a653;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1.5rem;
+    }
+    button:hover {
+      background: #b58434;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Order Cold Pressed Oils</h1>
+  </header>
+
+  <form action="https://formspree.io/f/mqalnbnp" method="POST">
+    <label for="name">Full Name:</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="email">Email Address:</label>
+    <input type="email" name="_replyto" id="email" required>
+
+    <label for="oil">Choose Oil Type:</label>
+    <select name="oil" id="oil" required>
+      <option value="">-- Select --</option>
+      <option value="Palli (Groundnut) Oil">Palli (Groundnut) Oil</option>
+      <option value="Nuvvulu (Sesame) Oil">Nuvvulu (Sesame) Oil</option>
+      <option value="Sunflower Oil">Sunflower Oil</option>
+      <option value="Coconut Oil">Coconut Oil</option>
+    </select>
+
+    <label for="quantity">Quantity (Litres):</label>
+    <input type="number" name="quantity" id="quantity" min="1" required>
+
+    <input type="hidden" name="_redirect" value="https://YOUR_GITHUB_USERNAME.github.io/YOUR_REPO_NAME/thankyou.html">
+
+    <button type="submit">Place Order</button>
+  </form>
+
+</body>
+</html>
